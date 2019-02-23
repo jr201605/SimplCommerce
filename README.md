@@ -1,55 +1,100 @@
-## Prerequisite:
-- Visual Studio 2015 Update 2
-- Install .NET Core SDK (RC2) and NuGet Manager extension for Visual Studio (https://www.microsoft.com/net/core#windows)
-- StyleCop 4.7
-- SQL Server or Postgree
+# A simple, cross platform, modularized ecommerce system built on .NET Core
 
-## Technologies and frameworks used:
-- ASP.NET MVC Core 1.0 RC2 on .NET Core 1.0 RC2
-- Entity Framework Core 1.0 RC2
-- ASP.NET Identity Core 1.0 RC2
-- Autofac 4.0.0 RC1
-- Angular 1.5
+[![Join the chat at https://gitter.im/simplcommerce/SimplCommerce](https://badges.gitter.im/simplcommerce/SimplCommerce.svg)](https://gitter.im/simplcommerce/SimplCommerce?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Build Status
+| Build server    | Platform       | Status      |
+|-----------------|----------------|-------------|
+| AppVeyor        | Windows        |[![Build status](https://ci.appveyor.com/api/projects/status/cq61prgs6ta8e9hi/branch/master?svg=true)](https://ci.appveyor.com/project/thiennn/simplcommerce/branch/master) |
+| Azure Pipelines | All            |[![Build Status](https://simplcommerce.visualstudio.com/simplcommerce/_apis/build/status/simplcommerce.SimplCommerce?branchName=master)](https://simplcommerce.visualstudio.com/simplcommerce/_build/latest?definitionId=1&branchName=master)
+|Travis           | Linux / MacOS  |[![Build Status](https://travis-ci.org/simplcommerce/SimplCommerce.svg?branch=master)](https://travis-ci.org/simplcommerce/SimplCommerce) |
 
-## How to run on local (Windows)
-- Create a database in SQL Server
-- Update the connection string in appsettings.json in SimplCommerce.Web
-- Open Package Manager Console Window and type "Update-Database" then press Enter. This action will create database schema
-- Run src/Database/StaticData.sql to create seeding data
-- Press Controll + F5
+## Online demo (Azure Website)
+- Store front: http://demo.simplcommerce.com
+- Administration: http://demo.simplcommerce.com/admin Email: admin@simplcommerce.com Password: 1qazZAQ!
+
+## Docker
+
+For testing purpose only `docker run -p 5000:80 simplcommerce/ci-build`
+
+Continuous deployment: https://ci.simplcommerce.com
+
+## Visual Studio 2017 and SQL Server
+
+#### Prerequisites
+
+- SQL Server
+- [Visual Studio 2017 version >= 15.8 with .NET Core SDK 2.1.402](https://www.microsoft.com/net/download/all)
+
+#### Steps to run
+
+- Update the connection string in appsettings.json in SimplCommerce.WebHost
+- Build whole solution.
+- In Solution Explorer, make sure that SimplCommerce.WebHost is selected as the Startup Project
+- Open Package Manager Console Window and make sure that SimplCommerce.WebHost is selected as Default project. Then type "Update-Database" then press "Enter". This action will create database schema.
+- In Visual Studio, press "Control + F5".
 - The back-office can access via /Admin using the pre-created account: admin@simplcommerce.com, 1qazZAQ!
 
-## How to run on Ubuntu 14.04
- - Install the Install .NET Core SDK as instruction here https://www.microsoft.com/net/core#ubuntu
- - Install Postgresql https://www.postgresql.org/download/linux/ubuntu/
- - Create an empty database
- - Clone the source code if you haven't and cd to the folder src/SimplCommerce.Web
- - Open file project.json and add package "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.0-rc2-release1"
- - Open appsettings.json and change the connection string to postgre database that you just created. For example
-   ``` "DefaultConnection": "User ID=thien;Password=12345;Host=localhost;Port=5432;Database=SimplCommerce;Pooling=true;" ```
- - Open the file Startup.cs replay the SqlServer provider by Postgre
- ```
-   services.AddDbContext<HvDbContext>(options =>
-        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("SimplCommerce.Web")));
- ```
- - Run ```dotnet restore``` 
- - Re-add migration for postgre by deleting all file in SimplCommerce.Web/Migrations and run ```donet ef migrations add initialSchema```
- - Run ```dotnet ef database update```
- - Run src/Database/StaticData_Postgre.sql to create seeding data
- - Run ```dotnet run```
- - The back-office can access via /Admin using the pre-created account: admin@simplcommerce.com, 1qazZAQ!
+## Mac/Linux with PostgreSQL
 
-## Online demo
-Hosted in an Azure virtual machine A0 (shared core, 768 MB memory)
-Ubuntu 14.04 + Postgresql
-http://demo.simplcommerce.com
+#### Prerequisite
 
-## How to contribute:
+- PostgreSQL
+- [.NET Core SDK 2.2.101](https://www.microsoft.com/net/download/all)
+
+#### Steps to run
+
+- Update the connection string in appsettings.json in SimplCommerce.WebHost.
+- Run file simpl-build.sh by "sudo ./simpl-build.sh". For ubuntu 18 "sudo bash simpl-build.sh"
+- In the terminal, navigate to the "src/SimplCommerce.WebHost" type "dotnet run" and hit "Enter".
+- Open browser, open http://localhost:5000. The back-office can access via /Admin using the pre-created account: admin@simplcommerce.com, 1qazZAQ!
+
+## Technologies and frameworks used:
+
+- ASP.NET MVC Core 2.2
+- Entity Framework Core 2.2
+- ASP.NET Identity Core 2.2
+- Angular 1.6.3
+- MediatR 6.0.0 for domain event
+
+## Docs
+
+http://docs.simplcommerce.com
+
+## Roadmap
+
+https://github.com/simplcommerce/SimplCommerce/wiki/Roadmap
+
+## How to contribute
+
+- Star this project on GitHub.
 - Report bugs or suggest features by create new issues or add comments to issues
-- Pickup an issue, create your own branch and implement it, then submit a Merge Request when you finished the implemntation and testing
-- Remember to fix all the StyleCop violations before submit a Merge Request
+- Submit pull requests
+- Spread the word by blogging about SimplCommerce or sharing it on social networks
+- Donate us
+
+## Contributors
+
+This project exists thanks to all the people who contribute.
+
+<a href="https://github.com/simplcommerce/SimplCommerce/graphs/contributors"><img src="https://opencollective.com/simplcommerce/contributors.svg?width=890" title="contributors" alt="contributors" /></a>
+
+## Backers
+
+Love our work and help us continue our activities? [[Become a backer](https://opencollective.com/simplcommerce#backer)]
+
+<a href="https://opencollective.com/simplcommerce#backers" target="_blank"><img src="https://opencollective.com/simplcommerce/backers.svg?width=890"></a>
+
+## Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/simplcommerce#sponsor)]
+
+<a href="https://opencollective.com/simplcommerce/sponsor/0/website" target="_blank"><img src="https://opencollective.com/simplcommerce/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/simplcommerce/sponsor/1/website" target="_blank"><img src="https://opencollective.com/simplcommerce/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/simplcommerce/sponsor/2/website" target="_blank"><img src="https://opencollective.com/simplcommerce/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/simplcommerce/sponsor/3/website" target="_blank"><img src="https://opencollective.com/simplcommerce/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/simplcommerce/sponsor/4/website" target="_blank"><img src="https://opencollective.com/simplcommerce/sponsor/4/avatar.svg"></a>
 
 ## License
+
 SimplCommerce is licensed under the Apache 2.0 license.
